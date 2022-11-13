@@ -10,6 +10,7 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { Board } from './board.entity';
 // import { Board, BoardStatus } from './board.model';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
@@ -17,7 +18,13 @@ import { BoardStatusValidationPipe } from './pipes/board-status-validation.pipe'
 
 @Controller('boards')
 export class BoardsController {
-  // constructor(private readonly boardsService: BoardsService) {}
+  constructor(private readonly boardsService: BoardsService) {}
+
+  @Get(':/id')
+  getBoardById(@Param('id') id: number): Promise<Board> {
+    return this.boardsService.getBoardById(id);
+  }
+
   // @Get()
   // getAllBoards(): Board[] {
   //   return this.boardsService.getAllBoards();
