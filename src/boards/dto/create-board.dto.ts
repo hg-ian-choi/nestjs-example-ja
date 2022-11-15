@@ -1,4 +1,3 @@
-// boards/dto/create-board.dto.ts
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateBoardDto {
