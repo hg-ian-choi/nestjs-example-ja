@@ -1,3 +1,7 @@
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
 import { User } from './user.entity';
@@ -8,7 +12,16 @@ export class UserRepository extends Repository<User> {
     const { username, password } = _authCredentialDto;
 
     const user = this.create({ username, password });
-    await this.save(user);
+
+    try {
+      await this.save(user);
+    } catch (_error) {
+      if (_error.code === '23505') {
+        throw new ConflictException(`Existing username`);
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
 
     return user;
   }
