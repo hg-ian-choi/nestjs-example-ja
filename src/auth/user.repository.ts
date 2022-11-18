@@ -1,6 +1,7 @@
 import {
   ConflictException,
   InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { AuthCredentialDto } from './dto/auth-credential.dto';
@@ -28,5 +29,16 @@ export class UserRepository extends Repository<User> {
     }
 
     return user;
+  }
+
+  async signIn(_authCredentialDto: AuthCredentialDto): Promise<string> {
+    const { username, password } = _authCredentialDto;
+    const user = await this.findOne({ username });
+
+    if (user && (await bcrypt.compare(password, user.password))) {
+      return 'Login success';
+    } else {
+      throw new UnauthorizedException('Login failed');
+    }
   }
 }
