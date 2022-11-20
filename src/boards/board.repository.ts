@@ -42,8 +42,9 @@ export class BoardRepository extends Repository<Board> {
     return board;
   }
 
-  async deleteBoard(_id: number): Promise<void> {
-    const result = await this.delete(_id);
+  async deleteBoard(_id: number, _user: User): Promise<void> {
+    const result = await this.delete({ id: _id, user: _user });
+
     if (result.affected === 0) {
       throw new NotFoundException(`Can't find Board with id: ${_id}`);
     }

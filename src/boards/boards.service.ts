@@ -53,8 +53,8 @@ export class BoardsService {
   //     return found;
   // }
 
-  deleteBoard(_id: number): Promise<void> {
-    return this.boardRepository.deleteBoard(_id);
+  deleteBoard(_id: number, _user: User): Promise<void> {
+    return this.boardRepository.deleteBoard(_id, _user);
   }
 
   // deleteBoard(id: string): void {
