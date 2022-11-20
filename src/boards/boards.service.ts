@@ -13,8 +13,8 @@ export class BoardsService {
     private readonly boardRepository: BoardRepository,
   ) {}
 
-  getAllBoards(): Promise<Board[]> {
-    return this.boardRepository.getAllBoards();
+  getAllBoards(_user: User): Promise<Board[]> {
+    return this.boardRepository.getAllBoards(_user);
   }
 
   // getAllBoards(): Board[] {

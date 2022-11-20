@@ -7,8 +7,14 @@ import { CreateBoardDto } from './dto/create-board.dto';
 
 @EntityRepository(Board)
 export class BoardRepository extends Repository<Board> {
-  async getAllBoards(): Promise<Board[]> {
-    return this.find();
+  async getAllBoards(_user: User): Promise<Board[]> {
+    // return this.find();
+    const query = this.createQueryBuilder('boards');
+
+    query.where('boards.userId = :userId', { userId: _user.id });
+
+    const boards = await query.getMany();
+    return boards;
   }
 
   async getBoardById(_id: number): Promise<Board> {
