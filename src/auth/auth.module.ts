@@ -13,7 +13,7 @@ import { UserRepository } from './user.repository';
     JwtModule.register({
       secret: 'JwtSecretKey',
       signOptions: {
-        expiresIn: 60,
+        expiresIn: 3600,
       },
     }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
